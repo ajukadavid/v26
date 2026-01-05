@@ -40,9 +40,9 @@
 
         <!-- Links Section -->
         <div class="bg-black text-white px-8 md:px-16 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end gap-12">
                 <!-- Left Column -->
-                <div class="flex flex-col gap-8">
+                <div class="flex flex-col gap-8 items-center md:items-start text-center md:text-left">
                     <!-- Logo -->
                     <img src="/logo.png" alt="V26" class="h-8 w-auto" />
 
@@ -59,7 +59,7 @@
                 </div>
 
                 <!-- Right Column -->
-                <div class="flex flex-col gap-4 text-left md:text-right">
+                <div class="flex flex-col gap-4 text-center md:text-right">
                     <a href="#"
                         class="text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-green-bright transition-colors duration-300">
                         INSTAGRAM
@@ -77,7 +77,7 @@
 
             <!-- Copyright -->
             <div
-                class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4">
+                class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4 text-center">
                 <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
                     &copy; {{ currentYear }} V26. ALL RIGHTS RESERVED.
                 </p>
