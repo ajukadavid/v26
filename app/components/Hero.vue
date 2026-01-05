@@ -2,11 +2,7 @@
   <div class="relative h-screen w-full overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0">
-      <img 
-        src="/Heroimage.JPG" 
-        alt="Hero Background" 
-        class="w-full h-full object-cover"
-      />
+      <img src="/Heroimage.JPG" alt="Hero Background" class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-black/40"></div>
     </div>
 
@@ -18,8 +14,9 @@
           POSSESS<br />
           THE CULTURE
         </h1>
-        
-        <button class="bg-green-bright text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity">
+
+        <button
+          class="bg-green-bright text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity">
           THE VAULT
         </button>
       </div>
@@ -35,7 +32,8 @@
     </div>
 
     <!-- Scrolling Ticker at Bottom -->
-    <div class="absolute bottom-0 left-0 right-0 bg-green-bright text-black py-3 overflow-hidden z-20 -rotate-2 transform origin-bottom-left">
+    <div
+      class="absolute bottom-0 left-0 right-0 bg-green-bright text-black py-3 overflow-hidden z-20 -rotate-2 transform origin-bottom-left">
       <div class="ticker-wrapper">
         <div class="ticker-content">
           <span class="ticker-item">RESPONSIBLY MADE</span>
@@ -70,12 +68,12 @@
   display: inline-block;
   font-weight: 700;
   font-size: 0.875rem;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .ticker-item::after {
   content: "•";
-  margin-left: 2rem;
+  margin-left: 1rem;
   font-weight: 700;
 }
 
@@ -83,6 +81,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -91,11 +90,11 @@
 @media (min-width: 768px) {
   .ticker-item {
     font-size: 1rem;
-    padding: 0 3rem;
+    padding: 0 1.5rem;
   }
-  
+
   .ticker-item::after {
-    margin-left: 3rem;
+    margin-left: 1.5rem;
   }
 }
 </style>
