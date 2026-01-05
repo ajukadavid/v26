@@ -15,10 +15,10 @@
           THE CULTURE
         </h1>
 
-        <button
-          class="bg-green-bright text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity">
-          THE VAULT
-        </button>
+        <NuxtLink to="/vault"
+          class="bg-green-bright text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity inline-block">
+          ENTER THE VAULT
+        </NuxtLink>
       </div>
 
       <!-- Bottom Text -->

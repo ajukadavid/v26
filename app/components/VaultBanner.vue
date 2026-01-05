@@ -16,10 +16,10 @@
                 <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-4 max-w-xl leading-tight">
                     Modern streetwear for everyday movement.
                 </h3>
-                <button
-                    class="bg-green-bright text-black font-bold text-sm md:text-base px-8 py-3 hover:opacity-90 transition-opacity uppercase">
+                <NuxtLink to="/vault"
+                    class="bg-green-bright text-black font-bold text-sm md:text-base px-8 py-3 hover:opacity-90 transition-opacity uppercase inline-block">
                     THE VAULT
-                </button>
+                </NuxtLink>
             </div>
         </div>
     </div>

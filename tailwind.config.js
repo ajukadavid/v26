@@ -18,6 +18,7 @@ export default {
       },
       fontFamily: {
         'oswald': ['Oswald', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
         'sans': ['Oswald', 'sans-serif'], // Make Oswald the default font
       },
       maxWidth: {

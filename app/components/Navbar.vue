@@ -1,31 +1,33 @@
 <template>
   <nav
-    :class="['fixed top-0 left-0 right-0 mx-auto max-w-7xl z-50 transition-colors duration-300', isScrolled ? 'bg-black' : 'bg-transparent']">
-    <div class="px-8 md:px-16 lg:px-24 py-4">
+    :class="['fixed top-0 left-0 right-0 z-50 transition-colors duration-300', isScrolled ? 'bg-black' : 'bg-transparent']">
+    <div class="px-8 md:px-16 lg:px-24 py-2">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <img src="/logo.png" alt="V26 Logo" class="h-10 md:h-12 w-auto" />
+          <NuxtLink to="/">
+            <img src="/logo.png" alt="V26 Logo" class="h-10 md:h-12 w-auto" />
+          </NuxtLink>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-10">
-          <a href="#vault"
+          <NuxtLink to="/"
             class="text-white hover:text-green-bright transition-colors font-medium text-sm tracking-wide uppercase">
             The Vault
-          </a>
-          <a href="#about"
+          </NuxtLink>
+          <NuxtLink to="/about"
             class="text-white hover:text-green-bright transition-colors font-medium text-sm tracking-wide uppercase">
             About
-          </a>
-          <a href="#community"
+          </NuxtLink>
+          <NuxtLink to="/community"
             class="text-white hover:text-green-bright transition-colors font-medium text-sm tracking-wide uppercase">
             Community Page
-          </a>
-          <a href="#store"
+          </NuxtLink>
+          <NuxtLink to="/vault"
             class="text-white hover:text-green-bright transition-colors font-medium text-sm tracking-wide uppercase">
             Store
-          </a>
+          </NuxtLink>
 
           <!-- Cart Icon -->
           <button class="relative text-white hover:text-green-bright transition-colors">
@@ -56,26 +58,26 @@
         <div v-if="isMenuOpen"
           class="md:hidden fixed left-0 top-20 bg-black/80 backdrop-blur-sm rounded-r-lg overflow-hidden w-full shadow-2xl">
           <div class="flex flex-col space-y-1 py-6 px-4 items-start">
-            <a href="#vault"
+            <NuxtLink to="/"
               class="text-white hover:text-green-bright transition-colors font-medium uppercase py-3 px-4 hover:bg-white/5 rounded-lg text-left w-full"
               @click="isMenuOpen = false">
               The Vault
-            </a>
-            <a href="#about"
+            </NuxtLink>
+            <NuxtLink to="/about"
               class="text-white hover:text-green-bright transition-colors font-medium uppercase py-3 px-4 hover:bg-white/5 rounded-lg text-left w-full"
               @click="isMenuOpen = false">
               About
-            </a>
-            <a href="#community"
+            </NuxtLink>
+            <NuxtLink to="/community"
               class="text-white hover:text-green-bright transition-colors font-medium uppercase py-3 px-4 hover:bg-white/5 rounded-lg text-left w-full"
               @click="isMenuOpen = false">
               Community Page
-            </a>
-            <a href="#store"
+            </NuxtLink>
+            <NuxtLink to="/vault"
               class="text-white hover:text-green-bright transition-colors font-medium uppercase py-3 px-4 hover:bg-white/5 rounded-lg text-left w-full"
               @click="isMenuOpen = false">
               Store
-            </a>
+            </NuxtLink>
 
             <!-- Cart Button Mobile -->
             <button

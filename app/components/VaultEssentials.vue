@@ -4,7 +4,7 @@
         <div class="px-4 md:px-8 lg:px-12 py-8">
             <!-- Header with Blue Border Frame -->
             <div class="p-4 md:p-6 mb-8 flex items-center justify-between">
-                <h2 class="text-white text-4xl md:text-6xl font-bold leading-tight">
+                <h2 class="text-white text-4xl md:text-7xl font-bold leading-tight">
                     VAULT<br />ESSENTIALS
                 </h2>
                 <div class="flex gap-2">
@@ -25,8 +25,9 @@
 
             <!-- Product Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-                <div v-for="(product, index) in products" :key="index" class="product-card group cursor-pointer">
-                    <div class="relative bg-transparent aspect-[4/5] overflow-hidden">
+                <div v-for="(product, index) in products" :key="index"
+                    class="product-card group cursor-pointer bg-zinc-950">
+                    <div class="relative bg-zinc-950 aspect-[4/5] overflow-hidden">
                         <!-- Default Image -->
                         <img :src="product.image" :alt="product.name"
                             class="w-full h-full object-cover zoom-image absolute inset-0 z-10 transition-opacity duration-700 ease-in-out group-hover:opacity-0" />

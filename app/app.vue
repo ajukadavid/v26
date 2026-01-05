@@ -1,10 +1,22 @@
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (const registration of registrations) {
+        registration.unregister()
+      }
+    })
+  }
+})
+</script>
+
 <template>
   <div class="bg-black min-h-screen">
-    <div class="max-w-7xl mx-auto">
+    <div>
       <Navbar />
-      <Hero />
-      <VaultEssentials />
-      <VaultBanner />
+      <NuxtPage />
       <Footer />
     </div>
   </div>
