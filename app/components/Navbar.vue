@@ -1,5 +1,6 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+  <nav
+    :class="['fixed top-0 left-0 right-0 mx-auto max-w-7xl z-50 transition-colors duration-300', isScrolled ? 'bg-black' : 'bg-transparent']">
     <div class="px-8 md:px-16 lg:px-24 py-4">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
@@ -96,9 +97,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const isMenuOpen = ref(false)
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>

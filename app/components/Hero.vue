@@ -72,9 +72,17 @@
 }
 
 .ticker-item::after {
-  content: "•";
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
   margin-left: 1rem;
-  font-weight: 700;
+  background-image: url('/v26logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0);
+  vertical-align: middle;
 }
 
 @keyframes scroll {
@@ -94,6 +102,8 @@
   }
 
   .ticker-item::after {
+    width: 2rem;
+    height: 2rem;
     margin-left: 1.5rem;
   }
 }

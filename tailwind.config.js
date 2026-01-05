@@ -20,6 +20,10 @@ export default {
         'oswald': ['Oswald', 'sans-serif'],
         'sans': ['Oswald', 'sans-serif'], // Make Oswald the default font
       },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
+      },
     },
   },
   plugins: [],
