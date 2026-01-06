@@ -43,9 +43,13 @@
 
             <!-- Copyright -->
             <div
-                class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4 text-center">
+                class="mt-16 pt-8 border-t border-white/10 flex flex-col justify-center items-center gap-4 text-center">
                 <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
                     &copy; {{ currentYear }} V26. ALL RIGHTS RESERVED.
+                </p>
+                <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                    BUILD BY <a href="https://www.afrikoode.com/" target="_blank" rel="noopener noreferrer"
+                        class="text-green-bright hover:text-green-400 transition-colors duration-300">AFRIKOODE</a>
                 </p>
             </div>
         </div>
