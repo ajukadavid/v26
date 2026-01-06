@@ -9,7 +9,7 @@
         <!-- Text Content -->
         <div class="max-w-3xl relative z-10">
             <h2 class="text-white text-4xl md:text-6xl font-black leading-none uppercase tracking-tight">
-                STAY CLOSE BE THE<br />
+                "STAY CLOSE" BE THE<br />
                 FIRST TO KNOW<br />
                 ABOUT DROPS,<br />
                 COMMUNITY EVENTS,<br />

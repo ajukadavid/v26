@@ -7,47 +7,37 @@
 
         <!-- Main Content -->
         <main
-            class="flex-grow flex flex-col items-center justify-center px-6 md:px-12 py-20 max-w-4xl mx-auto text-center relative z-10">
-            <h1 class="text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-16">
+            class="main-container flex-grow flex flex-col items-center justify-center px-6 md:px-12 py-20 w-full mx-auto text-center relative z-10">
+            <h1 class="page-title text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-16">
                 WELCOME TO THE VAULT
             </h1>
 
-            <div
-                class="space-y-8 text-sm md:text-base leading-relaxed text-gray-300 text-left max-w-3xl mx-auto font-inter">
-                <p>
-                    Sometimes, the idea of perfection is paralysing and overwhelming to the point that people would
-                    rather do nothing than do something, not 100% "right". However, we believe that we don't need a
-                    handful of people living a completely sustainable life, but we need millions of people doing it
-                    imperfectly.
-                </p>
+            <!-- Premium Video Player -->
+            <div class="video-container mx-auto desktop-video">
+                <video ref="videoPlayer" class="premium-video-player" preload="metadata" playsinline loop autoplay
+                    :poster="videoPoster" @loadedmetadata="onVideoLoaded" @error="onVideoError" @click="togglePlay">
+                    <source src="/v26video.webm" type="video/webm">
+                    <p class="text-gray-400">Your browser doesn't support HTML5 video.</p>
+                </video>
 
-                <p>
-                    Today fashion consumption is at an all-time high and this contributes to a large percentage of
-                    pollution and waste worldwide. In order to be entirely sustainable, brands should create and produce
-                    nothing at all, as every product leaves a carbon footprint. However, this approach is unrealistic as
-                    the apparel and textile sector is the 4th biggest in the world and millions of people rely on it to
-                    survive. Therefore, we believe it's important to look for realistic long-term solutions that focus
-                    on creating safe and ethical working conditions for people in every chain of production while
-                    mitigating the negative impact on the environment.
-                </p>
+                <!-- Custom Mute/Unmute Button -->
+                <button @click="toggleMute" class="mute-button" :class="{ 'muted': isMuted }" aria-label="Toggle mute">
+                    <svg v-if="!isMuted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+                    </svg>
+                </button>
 
-                <p>
-                    However, sustainability is a complicated, constantly evolving journey, and every step forward must
-                    be celebrated. Unfortunately, the topic of sustainability has become tainted as people often think
-                    it is being forced upon them, take on an all-or-nothing mentality, or are turned off that
-                    sustainable products, such as organic and fair trade, cost more. The truth is: everything comes with
-                    a cost. Fast fashion has arisen with discounted clothing made so poorly that 60% of it is thrown out
-                    within a year, only to be worn once or twice. By purchasing cheap and harmful fabrics, there is an
-                    immense environmental and public health toll being paid.
-                </p>
-
-                <p>
-                    Lately, sustainability has been used as a buzzword to guilt-trip and convince people to buy their
-                    green products, but to us, sustainability is about creating a real impact instead of using it as a
-                    marketing strategy. While our primary focus has been on our designs and making the best streetwear
-                    possible, every single production-related decision since day one has been made with sustainability
-                    in mind – hence how the name V26 was born.
-                </p>
+                <!-- Loading Indicator -->
+                <!-- <div v-if="isLoading" class="loading-overlay">
+                    <div class="loading-spinner"></div>
+                </div> -->
             </div>
 
 
@@ -56,7 +46,13 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
+
+// Video player state
+const videoPlayer = ref(null)
+const isLoading = ref(true)
+const videoPoster = ref('')
+const isMuted = ref(false)
 
 // Set page meta
 useHead({
@@ -65,12 +61,228 @@ useHead({
         { name: 'description', content: 'Our commitment to sustainability and ethical fashion.' }
     ]
 })
+
+// Video event handlers
+const onVideoLoaded = () => {
+    isLoading.value = false
+}
+
+const onVideoError = (error) => {
+    console.error('Video loading error:', error)
+    isLoading.value = false
+}
+
+// Toggle mute/unmute
+const toggleMute = () => {
+    if (videoPlayer.value) {
+        videoPlayer.value.muted = !videoPlayer.value.muted
+        isMuted.value = videoPlayer.value.muted
+    }
+}
+
+// Toggle play/pause
+const togglePlay = () => {
+    if (videoPlayer.value) {
+        if (videoPlayer.value.paused) {
+            videoPlayer.value.play()
+        } else {
+            videoPlayer.value.pause()
+        }
+    }
+}
+
+// Optional: Auto-play on mount (with user interaction)
+onMounted(() => {
+    // Ensure video plays automatically
+    if (videoPlayer.value) {
+        // Try to play unmuted first
+        const playPromise = videoPlayer.value.play()
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    // Video is playing unmuted successfully
+                    console.log('Video autoplay started with sound')
+                })
+                .catch((error) => {
+                    // Autoplay with sound was prevented, try muted
+                    console.log('Autoplay with sound blocked, trying muted:', error)
+                    videoPlayer.value.muted = true
+                    isMuted.value = true
+                    videoPlayer.value.play()
+                        .then(() => {
+                            console.log('Video autoplay started muted')
+                        })
+                        .catch((err) => {
+                            console.error('Autoplay failed completely:', err)
+                        })
+                })
+        }
+    }
+})
 </script>
 
 <style scoped>
 /* Ensure legible text on small screens */
 p {
     font-weight: 300;
+}
+
+/* Video Container */
+.video-container {
+    position: relative;
+    width: 100%;
+    margin: 2rem auto;
+}
+
+/* Desktop: Wide layout (80% width) */
+.desktop-video {
+    width: 80%;
+    max-width: 80vw;
+}
+
+/* Premium Video Player Styling */
+.premium-video-player {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 24px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(34, 197, 94, 0.2),
+        0 0 80px rgba(34, 197, 94, 0.15);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    object-fit: cover;
+    background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 30, 30, 0.95) 100%);
+    cursor: pointer;
+}
+
+.premium-video-player:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(34, 197, 94, 0.3),
+        0 0 120px rgba(34, 197, 94, 0.2);
+}
+
+/* Custom Mute Button */
+.mute-button {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+}
+
+.mute-button:hover {
+    background: rgba(16, 185, 129, 0.8);
+    border-color: rgba(16, 185, 129, 1);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.mute-button:active {
+    transform: scale(0.95);
+}
+
+.mute-button.muted {
+    background: rgba(34, 197, 94, 0.6);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.mute-button.muted:hover {
+    background: rgba(34, 197, 94, 0.8);
+    border-color: rgba(34, 197, 94, 1);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid #9333ea;
+    border-right: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+    /* Mobile: Portrait layout (narrower, taller) */
+    .main-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .desktop-video {
+        width: 95%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .premium-video-player {
+        border-radius: 16px;
+        height: 65vh;
+        min-height: 50vh;
+        max-height: 65vh;
+        object-fit: cover;
+    }
+
+    .premium-video-player:hover {
+        transform: translateY(-2px) scale(1.005);
+    }
+
+    .mute-button {
+        width: 48px;
+        height: 48px;
+        bottom: 16px;
+        right: 16px;
+    }
 }
 
 .bg-dot-pattern {
