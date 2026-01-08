@@ -94,7 +94,7 @@
         </div>
 
         <!-- Text Section 2 -->
-        <div class="max-w-5xl w-full mx-auto px-6 md:px-12">
+        <!-- <div class="max-w-5xl w-full mx-auto px-6 md:px-12">
             <div class="space-y-8 text-sm md:text-base leading-relaxed text-gray-300 mx-auto text-left font-inter">
                 <p>
                     Take our essential V26 Luminous Tee, for example. It embodies recognition, community, and identity.
@@ -129,7 +129,7 @@
                     movement transcends style; it represents identity, belonging, and community.
                 </p>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>
