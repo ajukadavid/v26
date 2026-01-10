@@ -135,10 +135,10 @@ p {
     margin: 2rem auto;
 }
 
-/* Desktop: Wide layout (80% width) */
+/* Desktop: Wide layout (50% width) */
 .desktop-video {
-    width: 80%;
-    max-width: 80vw;
+    width: 50%;
+    max-width: 50vw;
 }
 
 /* Premium Video Player Styling */

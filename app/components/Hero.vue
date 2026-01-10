@@ -2,7 +2,7 @@
   <div class="relative h-screen w-full overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0">
-      <img src="/Heroimage.webp" alt="Hero Background" class="w-full h-full object-cover" />
+      <img src="/hero.png" alt="Hero Background" class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-black/40"></div>
     </div>
 

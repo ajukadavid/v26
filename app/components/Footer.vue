@@ -26,17 +26,17 @@
 
                 <!-- Right Column -->
                 <div class="flex flex-col gap-4 text-center md:text-right">
-                    <a href="#"
+                    <a href="https://www.instagram.com/vlt26hq?igsh=aThtdWdjbnRtMHZ4&utm_source=qr" target="_blank"
                         class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
                         INSTAGRAM
                     </a>
-                    <a href="#"
+                    <a href="https://x.com/26vault?s=21" target="_blank"
                         class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
-                        TWITTER
+                        X
                     </a>
-                    <a href="#"
+                    <a href="https://www.tiktok.com/@26vault?_r=1&_t=ZS-92uLtDheEz7" target="_blank"
                         class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
-                        FACEBOOK
+                        TIKTOK
                     </a>
                 </div>
             </div>
