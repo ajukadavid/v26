@@ -48,7 +48,7 @@
                     &copy; {{ currentYear }} V26. ALL RIGHTS RESERVED.
                 </p>
                 <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
-                    BUILD BY <a href="https://www.afrikoode.com/" target="_blank" rel="noopener noreferrer"
+                    BUILT BY <a href="https://www.afrikoode.com/" target="_blank" rel="noopener noreferrer"
                         class="text-green-bright hover:text-green-400 transition-colors duration-300">AFRIKOODE</a>
                 </p>
             </div>
