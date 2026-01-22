@@ -30,15 +30,15 @@
           </NuxtLink>
 
           <!-- Cart Icon -->
-          <button class="relative text-white hover:text-green-bright transition-colors">
+          <button @click="openCart" class="relative text-white hover:text-green-bright transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <!-- Cart Badge -->
-            <span
+            <span v-if="cartCount > 0" id="cart-count-desktop"
               class="absolute -top-2 -right-2 bg-green-bright text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              2
+              {{ cartCount }}
             </span>
           </button>
         </div>
@@ -80,15 +80,15 @@
             </NuxtLink>
 
             <!-- Cart Button Mobile -->
-            <button
+            <button @click="openCart"
               class="flex items-center justify-between text-white hover:text-green-bright transition-colors py-3 px-4 hover:bg-white/5 rounded-lg mt-2 border-t border-white/10 pt-5 w-full">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              <span
+              <span v-if="cartCount > 0" id="cart-count-mobile"
                 class="bg-green-bright text-black text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-                2
+                {{ cartCount }}
               </span>
             </button>
           </div>
@@ -103,6 +103,25 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
+const cartCount = ref(0)
+
+// Open Ecwid cart
+const openCart = () => {
+  if (window.Ecwid && window.Ecwid.openPage) {
+    window.Ecwid.openPage('cart')
+
+    // Sync cart count after opening just in case
+    if (window.Ecwid.Cart && window.Ecwid.Cart.get) {
+      setTimeout(() => {
+        window.Ecwid.Cart.get(cart => {
+          cartCount.value = cart?.productsQuantity || 0
+        })
+      }, 500)
+    }
+  } else {
+    alert('Cart is not ready yet. Please wait a moment and try again.')
+  }
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
@@ -110,6 +129,33 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+
+  const initEcwidCart = () => {
+    if (!window.Ecwid || !window.Ecwid.Cart) return
+
+    const updateCount = (cart) => {
+      cartCount.value = cart?.productsQuantity || 0
+    }
+
+    // Initial sync
+    window.Ecwid.Cart.get(updateCount)
+
+    // Live updates using correct name
+    window.Ecwid.On('cart.changed', updateCount)
+  }
+
+  if (process.client) {
+    if (window.Ecwid?.OnAPILoaded) {
+      window.Ecwid.OnAPILoaded.add(initEcwidCart)
+    } else {
+      const wait = setInterval(() => {
+        if (window.Ecwid?.OnAPILoaded) {
+          clearInterval(wait)
+          window.Ecwid.OnAPILoaded.add(initEcwidCart)
+        }
+      }, 100)
+    }
+  }
 })
 
 onUnmounted(() => {

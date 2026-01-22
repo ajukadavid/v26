@@ -1,5 +1,5 @@
 <template>
-    <div class="vault-essentials bg-black">
+    <div class="vault-essentials bg-black overflow-hidden">
         <!-- Product Grid Section -->
         <div class="px-4 md:px-8 lg:px-12 py-8">
             <!-- Header with Blue Border Frame -->
@@ -25,19 +25,21 @@
 
             <!-- Product Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-                <div v-for="(product, index) in products" :key="index"
-                    class="product-card group cursor-pointer bg-zinc-950">
-                    <div class="relative bg-zinc-950 aspect-[4/5] overflow-hidden">
-                        <!-- Default Image -->
-                        <img :src="product.image" :alt="product.name"
-                            class="w-full h-full object-cover zoom-image absolute inset-0 z-10 transition-opacity duration-700 ease-in-out group-hover:opacity-0" />
-                        <!-- Hover Image -->
-                        <img :src="product.hoverImage" :alt="product.name + ' Alternate'"
-                            class="w-full h-full object-cover zoom-image absolute inset-0 z-0 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100" />
-                    </div>
-                    <div class="bg-green-bright p-3 flex justify-between items-center w-full">
-                        <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
-                        <span class="text-black text-sm font-bold">{{ product.price }}</span>
+                <div v-for="(product, index) in products" :key="index" :ref="(el) => { if (el) cardRefs[index] = el }"
+                    class="scroll-wrapper" :class="index % 2 === 0 ? 'slide-left' : 'slide-right'">
+                    <div class="product-card group cursor-pointer bg-zinc-950">
+                        <div class="relative bg-zinc-950 aspect-[4/5] overflow-hidden">
+                            <!-- Default Image -->
+                            <img :src="product.image" :alt="product.name"
+                                class="w-full h-full object-cover zoom-image absolute inset-0 z-10 transition-opacity duration-700 ease-in-out group-hover:opacity-0" />
+                            <!-- Hover Image -->
+                            <img :src="product.hoverImage" :alt="product.name + ' Alternate'"
+                                class="w-full h-full object-cover zoom-image absolute inset-0 z-0 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100" />
+                        </div>
+                        <div class="bg-green-bright p-3 flex justify-between items-center w-full">
+                            <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
+                            <span class="text-black text-sm font-bold">{{ product.price }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,6 +50,36 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const cardRefs = ref([])
+let observer = null
+
+onMounted(() => {
+    observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible')
+            } else {
+                entry.target.classList.remove('is-visible')
+            }
+        })
+    }, {
+        threshold: 0.2,
+        rootMargin: '-100px'
+    })
+
+    cardRefs.value.forEach((card) => {
+        if (card) observer.observe(card)
+    })
+})
+
+onUnmounted(() => {
+    if (observer) {
+        observer.disconnect()
+    }
+})
+
 const products = [
     {
         name: 'CAMO SKI MASK',
@@ -77,6 +109,24 @@ const products = [
 </script>
 
 <style scoped>
+.scroll-wrapper {
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-left {
+    transform: translateX(-100px);
+}
+
+.slide-right {
+    transform: translateX(100px);
+}
+
+.scroll-wrapper.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 .product-card {
     transition: all 0.3s ease;
 }

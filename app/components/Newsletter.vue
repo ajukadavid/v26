@@ -7,7 +7,7 @@
         </div>
 
         <!-- Text Content -->
-        <div class="max-w-3xl relative z-10">
+        <div ref="textRef" class="max-w-3xl relative z-10 scroll-animate">
             <h2 class="text-white text-4xl md:text-6xl font-black leading-none uppercase tracking-tight">
                 "STAY CLOSE" BE THE<br />
                 FIRST TO KNOW<br />
@@ -37,12 +37,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const email = ref('')
+const textRef = ref(null)
+let observer = null
+
+onMounted(() => {
+    observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible')
+                observer.unobserve(entry.target)
+            }
+        })
+    }, {
+        threshold: 0.2
+    })
+
+    if (textRef.value) {
+        observer.observe(textRef.value)
+    }
+})
+
+onUnmounted(() => {
+    if (observer) {
+        observer.disconnect()
+    }
+})
 </script>
 
 <style scoped>
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-animate.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s ease;

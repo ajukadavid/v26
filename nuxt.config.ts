@@ -17,7 +17,8 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      ]
+      ],
+      script: []
     }
   },
 
@@ -27,5 +28,15 @@ export default defineNuxtConfig({
       Inter: [300, 400, 500, 600, 700]
     },
     display: 'swap'
+  },
+
+  runtimeConfig: {
+    // Private keys - only available on server side
+    ecwidStoreId: process.env.ECWID_STORE_ID,
+    ecwidSecret: process.env.ECWID_SECRET,
+    public: {
+      // Public keys - exposed to client
+      ecwidPublic: process.env.ECWID_PUBLIC
+    }
   }
 })
