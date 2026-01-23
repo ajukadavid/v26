@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
         const products = data.items.map((product: any) => ({
             id: product.id,
             name: product.name,
-            price: product.price ? `$${product.price.toFixed(2)}` : 'Price not available',
+            price: product.price ? `₦${product.price.toFixed(2)}` : 'Price not available',
             image: product.imageUrl || product.thumbnailUrl || '/v26mark.png',
             hoverImage: product.galleryImages?.[0]?.url || product.imageUrl || product.thumbnailUrl || '/v26mark.png',
             outOfStock: product.quantity === 0 || !product.enabled

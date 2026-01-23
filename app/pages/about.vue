@@ -13,8 +13,8 @@
             <div class="space-y-6 text-sm md:text-base leading-relaxed text-white mx-auto text-left font-inter">
                 <p>
                     Our story began with three individuals on different paths, yet sharing the same timeline: a young
-                    actor with years of experience but still waiting for a significant break, a media expert shaped by
-                    the music industry, and a quiet fashion founder learning as he goes.
+                    actor with years of experience navigating his breakthrough phase, a media expert shaped by the music
+                    industry, and a fashion founder building with purpose, conviction, and clear intent…
                 </p>
                 <p>
                     V26 was born at that intersection, emerging not just as a brand but as a community of friends

@@ -7,9 +7,8 @@
                 </h1>
 
                 <!-- Loading State -->
-                <div v-if="loading" class="text-center py-20">
-                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-bright"></div>
-                    <p class="text-white mt-4 text-lg">Loading products...</p>
+                <div v-if="loading" class="flex items-center justify-center py-20">
+                    <img src="/logo.gif" alt="Loading..." class="w-48 h-48 object-contain" />
                 </div>
 
                 <!-- Error State -->
@@ -20,8 +19,8 @@
 
                 <!-- Product Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    <div v-for="(product, index) in products" :key="index" @click="navigateToProduct(product.id)"
-                        class="product-card group cursor-pointer relative block">
+                    <div v-for="(product, index) in paginatedProducts" :key="index"
+                        @click="navigateToProduct(product.id)" class="product-card group cursor-pointer relative block">
                         <!-- Out of Stock Badge -->
                         <div v-if="product.outOfStock"
                             class="absolute top-4 right-4 z-20 bg-[#ffb6b6] px-2 py-1 pointer-events-none">
@@ -44,6 +43,32 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Pagination Controls -->
+                <div v-if="totalPages > 1" class="flex justify-center items-center gap-2 mt-12">
+                    <!-- Previous Button -->
+                    <button @click="previousPage" :disabled="currentPage === 1"
+                        class="w-10 h-10 border border-white/20 flex items-center justify-center transition-colors"
+                        :class="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Page Info -->
+                    <span class="text-white text-sm font-bold px-4">
+                        Page {{ currentPage }} of {{ totalPages }}
+                    </span>
+
+                    <!-- Next Button -->
+                    <button @click="nextPage" :disabled="currentPage === totalPages"
+                        class="w-10 h-10 border border-white/20 flex items-center justify-center transition-colors"
+                        :class="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
         <Newsletter />
@@ -51,12 +76,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 // Reactive state
 const products = ref([])
 const loading = ref(true)
 const error = ref(null)
+const currentPage = ref(1)
+const productsPerPage = 10
+
+// Computed properties for pagination
+const totalPages = computed(() => {
+    return Math.ceil(products.value.length / productsPerPage)
+})
+
+const paginatedProducts = computed(() => {
+    const start = (currentPage.value - 1) * productsPerPage
+    const end = start + productsPerPage
+    return products.value.slice(start, end)
+})
+
+// Pagination functions
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+}
+
+const previousPage = () => {
+    if (currentPage.value > 1) {
+        currentPage.value--
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+}
 
 // Fetch products from Ecwid API
 onMounted(async () => {

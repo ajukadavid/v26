@@ -6,9 +6,8 @@
         <div class="pt-32"></div>
 
         <!-- Loading State -->
-        <div v-if="loading" class="text-center py-20">
-            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-bright"></div>
-            <p class="text-white mt-4 text-lg">Loading product...</p>
+        <div v-if="loading" class="flex items-center justify-center py-20">
+            <img src="/logo.gif" alt="Loading..." class="w-48 h-48 object-contain" />
         </div>
 
         <!-- Error State -->
@@ -35,8 +34,8 @@
 
             <!-- Desktop Layout -->
             <div class="hidden lg:grid lg:grid-cols-12 lg:gap-8">
-                <!-- Left Column - Product Info -->
-                <div class="lg:col-span-3">
+                <!-- Left Column - Product Info (30%) -->
+                <div class="lg:col-span-4">
                     <h1 class="text-white text-3xl xl:text-4xl font-bold uppercase tracking-tight mb-4">
                         {{ product.name }}
                     </h1>
@@ -94,26 +93,25 @@
                     </button>
                 </div>
 
-                <!-- Center Column - Main Image -->
-                <div class="lg:col-span-6">
-                    <div class="space-y-4">
-                        <div class="relative aspect-[4/5] bg-white overflow-hidden">
+                <!-- Right Column - Images (70%) -->
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-8 gap-4">
+                        <!-- Main Image -->
+                        <div class="col-span-6 relative aspect-[4/5] bg-white overflow-hidden">
                             <img :src="selectedImage" :alt="product.name" class="w-full h-full object-cover" />
                         </div>
-                    </div>
-                </div>
 
-                <!-- Right Column - Thumbnails -->
-                <div class="lg:col-span-3">
-                    <div class="space-y-4">
-                        <button v-for="(image, index) in allImages" :key="index" @click="selectedImage = image.url"
-                            :class="[
-                                'w-full aspect-[4/5] bg-white overflow-hidden border-4 transition-all',
-                                selectedImage === image.url ? 'border-green-bright' : 'border-transparent hover:border-gray-700'
-                            ]">
-                            <img :src="image.url" :alt="`${product.name} - View ${index + 1}`"
-                                class="w-full h-full object-cover" loading="lazy" />
-                        </button>
+                        <!-- Thumbnails - Right Side -->
+                        <div class="col-span-2 flex flex-col gap-4 overflow-y-auto">
+                            <button v-for="(image, index) in allImages" :key="index" @click="selectedImage = image.url"
+                                :class="[
+                                    'w-full aspect-[4/5] bg-white overflow-hidden border-4 transition-all',
+                                    selectedImage === image.url ? 'border-green-bright' : 'border-transparent hover:border-gray-700'
+                                ]">
+                                <img :src="image.url" :alt="`${product.name} - View ${index + 1}`"
+                                    class="w-full h-full object-cover" loading="lazy" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,7 +228,8 @@ const allImages = computed(() => {
         images.push(...product.value.galleryImages)
     }
 
-    return images
+    // Limit to 3 images for thumbnails
+    return images.slice(0, 3)
 })
 
 const colorOption = computed(() => {

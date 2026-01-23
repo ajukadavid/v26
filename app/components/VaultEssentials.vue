@@ -23,11 +23,16 @@
                 </div>
             </div>
 
+            <!-- Loading State -->
+            <div v-if="loading" class="flex items-center justify-center py-20">
+                <img src="/logo.gif" alt="Loading..." class="w-48 h-48 object-contain" />
+            </div>
+
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
                 <div v-for="(product, index) in products" :key="index" :ref="(el) => { if (el) cardRefs[index] = el }"
                     class="scroll-wrapper" :class="index % 2 === 0 ? 'slide-left' : 'slide-right'">
-                    <div class="product-card group cursor-pointer bg-zinc-950">
+                    <NuxtLink :to="`/vault/${product.id}`" class="product-card group cursor-pointer bg-zinc-950 block">
                         <div class="relative bg-zinc-950 aspect-[4/5] overflow-hidden">
                             <!-- Default Image -->
                             <img :src="product.image" :alt="product.name"
@@ -40,7 +45,7 @@
                             <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
                             <span class="text-black text-sm font-bold">{{ product.price }}</span>
                         </div>
-                    </div>
+                    </NuxtLink>
                 </div>
             </div>
 
@@ -53,9 +58,81 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const cardRefs = ref([])
+const products = ref([])
+const loading = ref(true)
 let observer = null
 
-onMounted(() => {
+// Fetch latest 4 products from Ecwid
+const fetchProducts = async () => {
+    try {
+        loading.value = true
+
+        // Fetch products using your server API endpoint
+        const response = await fetch('/api/ecwid/products')
+
+        if (!response.ok) throw new Error('Failed to fetch products')
+
+        const data = await response.json()
+
+        console.log('Ecwid API Response:', data)
+
+        if (data.success && data.items) {
+            // Get only the latest 4 products
+            products.value = data.items.slice(0, 4).map(item => {
+                console.log('Product item:', item)
+                return {
+                    id: item.id,
+                    name: item.name.toUpperCase(),
+                    price: item.price,
+                    image: item.image,
+                    hoverImage: item.hoverImage
+                }
+            })
+        }
+    } catch (error) {
+        console.error('Error fetching products from Ecwid:', error)
+
+        // Fallback to default products on error
+        products.value = [
+            {
+                id: 1,
+                name: 'CAMO SKI MASK',
+                price: '₦200.00',
+                image: '/v26mark.png',
+                hoverImage: '/v26mark1.png'
+            },
+            {
+                id: 2,
+                name: 'VAULT HOODIE',
+                price: '₦280.00',
+                image: '/v26shirt.png',
+                hoverImage: '/v26shirt1.png'
+            },
+            {
+                id: 3,
+                name: 'CAMO SKI MASK',
+                price: '₦200.00',
+                image: '/v26mark.png',
+                hoverImage: '/v26mark1.png'
+            },
+            {
+                id: 4,
+                name: 'VAULT HOODIE',
+                price: '₦280.00',
+                image: '/v26shirt.png',
+                hoverImage: '/v26shirt1.png'
+            }
+        ]
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(async () => {
+    // Fetch products first
+    await fetchProducts()
+
+    // Set up intersection observer after products are loaded
     observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -79,33 +156,6 @@ onUnmounted(() => {
         observer.disconnect()
     }
 })
-
-const products = [
-    {
-        name: 'CAMO SKI MASK',
-        price: '$200.00',
-        image: '/v26mark.png',
-        hoverImage: '/v26mark1.png'
-    },
-    {
-        name: 'VAULT HOODIE',
-        price: '$280.00',
-        image: '/v26shirt.png',
-        hoverImage: '/v26shirt1.png'
-    },
-    {
-        name: 'CAMO SKI MASK',
-        price: '$200.00',
-        image: '/v26mark.png',
-        hoverImage: '/v26mark1.png'
-    },
-    {
-        name: 'VAULT HOODIE',
-        price: '$280.00',
-        image: '/v26shirt.png',
-        hoverImage: '/v26shirt1.png'
-    }
-]
 </script>
 
 <style scoped>
