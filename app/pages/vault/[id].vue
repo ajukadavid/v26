@@ -40,7 +40,7 @@
                         {{ product.name }}
                     </h1>
                     <p class="text-white text-2xl font-bold mb-8">
-                        {{ product.priceFormatted }}
+                        {{ priceInNaira }}
                     </p>
 
                     <!-- Color Selector -->
@@ -122,7 +122,7 @@
                     {{ product.name }}
                 </h1>
                 <p class="text-white text-2xl font-bold mb-6">
-                    {{ product.priceFormatted }}
+                    {{ priceInNaira }}
                 </p>
 
                 <!-- Main Image -->
@@ -271,6 +271,14 @@ const sizeOption = computed(() => {
             { text: '3XL' }
         ]
     }
+})
+
+const priceInNaira = computed(() => {
+    if (!product.value.price) return 'Price not available'
+
+    // Format the price with Nigerian Naira symbol
+    const price = product.value.price
+    return `₦${price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 })
 
 // Methods
