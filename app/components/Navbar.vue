@@ -5,14 +5,14 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <NuxtLink to="/">
+          <NuxtLink to="/home">
             <img src="/logo.png" alt="V26 Logo" class="h-10 md:h-12 w-auto" />
           </NuxtLink>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-10">
-          <NuxtLink to="/"
+          <NuxtLink to="/home"
             class="text-white hover:text-green-bright transition-colors font-medium text-sm tracking-wide uppercase">
             The Vault
           </NuxtLink>
@@ -58,7 +58,7 @@
         <div v-if="isMenuOpen"
           class="md:hidden fixed left-0 top-20 bg-black/80 backdrop-blur-sm rounded-r-lg overflow-hidden w-full shadow-2xl">
           <div class="flex flex-col space-y-1 py-6 px-4 items-start">
-            <NuxtLink to="/"
+            <NuxtLink to="/home"
               class="text-white hover:text-green-bright transition-colors font-medium uppercase py-3 px-4 hover:bg-white/5 rounded-lg text-left w-full"
               @click="isMenuOpen = false">
               The Vault

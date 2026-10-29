@@ -1,8 +1,38 @@
 <template>
-  <div>
-    <Hero />
-    <VaultEssentials />
-    <VaultBanner />
-    <Newsletter />
+  <div class="bg-black h-[100svh] w-full flex flex-col items-center justify-center px-6 overflow-hidden">
+    <video autoplay muted loop playsinline preload="auto" poster="/vault-figure-poster.jpg"
+      class="h-[45svh] max-h-[28rem] w-auto object-contain pointer-events-none select-none" aria-hidden="true">
+      <source src="/vault-figure.webm" type="video/webm" />
+      <source src="/vault-figure.mp4" type="video/mp4" />
+    </video>
+
+    <NuxtLink to="/home"
+      class="enter-link mt-6 md:mt-10 bg-white text-black font-bold text-base md:text-lg px-8 py-4 uppercase tracking-wider hover:opacity-90 transition-opacity">
+      Enter the Vault
+    </NuxtLink>
   </div>
 </template>
+
+<script setup>
+useHead({
+  title: 'V26 - Possess The Culture'
+})
+</script>
+
+<style scoped>
+.enter-link {
+  animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

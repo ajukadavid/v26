@@ -17,7 +17,7 @@
                     Modern streetwear for everyday movement.
                 </h3>
                 <NuxtLink to="/vault"
-                    class="bg-green-bright text-black font-bold text-sm md:text-base px-8 py-3 hover:opacity-90 transition-opacity uppercase inline-block">
+                    class="bg-white text-black font-bold text-sm md:text-base px-8 py-3 hover:opacity-90 transition-opacity uppercase inline-block">
                     ENTER THE VAULT
                 </NuxtLink>
             </div>

@@ -53,7 +53,7 @@
             <div
                 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen max-w-none z-10 pointer-events-none">
                 <div
-                    class="bg-green-bright text-black py-3 overflow-hidden relative -rotate-2 origin-center border-y-2 border-black">
+                    class="bg-white text-black py-3 overflow-hidden relative -rotate-2 origin-center border-y-2 border-black">
                     <div
                         class="whitespace-nowrap animate-marquee flex items-center gap-6 font-black uppercase tracking-widest text-sm md:text-base">
                         <span>Responsibly Made</span> <img src="/v26logo.png" class="h-4 w-auto brightness-0" />

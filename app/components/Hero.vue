@@ -16,7 +16,7 @@
         </h1>
 
         <NuxtLink to="/vault"
-          class="bg-green-bright text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity inline-block">
+          class="bg-white text-black font-bold text-lg px-8 py-4 w-fit hover:opacity-90 transition-opacity inline-block">
           ENTER THE VAULT
         </NuxtLink>
       </div>
@@ -33,7 +33,7 @@
 
     <!-- Scrolling Ticker at Bottom -->
     <div
-      class="absolute bottom-0 left-0 right-0 bg-green-bright text-black py-3 overflow-hidden z-20 -rotate-2 transform origin-bottom-left">
+      class="absolute bottom-0 left-0 right-0 bg-white text-black py-3 overflow-hidden z-20 -rotate-2 transform origin-bottom-left">
       <div class="ticker-wrapper">
         <div class="ticker-content">
           <span class="ticker-item">RESPONSIBLY MADE</span>

@@ -8,17 +8,17 @@
                 <!-- Left Column -->
                 <div class="flex flex-col gap-8 items-center md:items-start text-center md:text-left">
                     <div>
-                        <NuxtLink to="/">
+                        <NuxtLink to="/home">
                             <img src="/logo.png" alt="V26" class="h-8 w-auto" />
                         </NuxtLink>
                     </div>
                     <nav class="flex flex-col gap-4">
                         <NuxtLink to="/vault"
-                            class="text-sm font-bold uppercase tracking-widest  hover:text-green-bright transition-all duration-300 hover:pl-2">
+                            class="text-sm font-bold uppercase tracking-widest  hover:text-gray-400 transition-all duration-300 hover:pl-2">
                             SHOP
                         </NuxtLink>
                         <NuxtLink to="/about"
-                            class="text-sm font-bold uppercase tracking-widest  hover:text-green-bright transition-all duration-300 hover:pl-2">
+                            class="text-sm font-bold uppercase tracking-widest  hover:text-gray-400 transition-all duration-300 hover:pl-2">
                             ABOUT
                         </NuxtLink>
                     </nav>
@@ -27,15 +27,15 @@
                 <!-- Right Column -->
                 <div class="flex flex-col gap-4 text-center md:text-right">
                     <a href="https://www.instagram.com/vlt26hq?igsh=aThtdWdjbnRtMHZ4&utm_source=qr" target="_blank"
-                        class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
+                        class="text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors duration-300">
                         INSTAGRAM
                     </a>
                     <a href="https://x.com/26vault?s=21" target="_blank"
-                        class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
+                        class="text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors duration-300">
                         X
                     </a>
                     <a href="https://www.tiktok.com/@26vault?_r=1&_t=ZS-92uLtDheEz7" target="_blank"
-                        class="text-sm font-bold uppercase tracking-widest hover:text-green-bright transition-colors duration-300">
+                        class="text-sm font-bold uppercase tracking-widest hover:text-gray-400 transition-colors duration-300">
                         TIKTOK
                     </a>
                 </div>
@@ -49,7 +49,7 @@
                 </p>
                 <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
                     BUILT BY <a href="https://www.afrikoode.com/" target="_blank" rel="noopener noreferrer"
-                        class="text-green-bright hover:text-green-400 transition-colors duration-300">AFRIKOODE</a>
+                        class="text-white hover:text-gray-300 transition-colors duration-300">AFRIKOODE</a>
                 </p>
             </div>
         </div>

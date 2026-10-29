@@ -36,8 +36,8 @@
                                 class="w-full h-full object-cover zoom-image absolute inset-0 z-0 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100 pointer-events-none" />
                         </div>
 
-                        <!-- Green Info Bar (Matching Reference) -->
-                        <div class="bg-green-bright p-3 flex justify-between items-center w-full">
+                        <!-- Info Bar (Matching Reference) -->
+                        <div class="bg-white p-3 flex justify-between items-center w-full">
                             <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
                             <span class="text-black text-sm font-bold">{{ product.price }}</span>
                         </div>

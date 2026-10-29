@@ -1,5 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+
+const route = useRoute()
+const isEntryPage = computed(() => route.path === '/')
 
 useHead({
   script: [
@@ -36,9 +39,9 @@ onMounted(() => {
 <template>
   <div class="bg-black min-h-screen">
     <div>
-      <Navbar />
+      <Navbar v-if="!isEntryPage" />
       <NuxtPage />
-      <Footer />
+      <Footer v-if="!isEntryPage" />
     </div>
 
     <!-- Hidden Ecwid Cart Widget for API Initialization -->

@@ -13,7 +13,7 @@
         <!-- Error State -->
         <div v-else-if="error" class="text-center py-20 px-4">
             <p class="text-red-400 text-lg">{{ error }}</p>
-            <NuxtLink to="/vault" class="text-green-bright mt-4 inline-block hover:underline">
+            <NuxtLink to="/vault" class="text-white mt-4 inline-block hover:underline">
                 ← Back to Vault
             </NuxtLink>
         </div>
@@ -23,7 +23,7 @@
             <!-- Global Back Button -->
             <div class="mb-8">
                 <NuxtLink to="/vault"
-                    class="text-green-bright flex items-center gap-2 hover:underline font-bold uppercase tracking-wider text-sm">
+                    class="text-white flex items-center gap-2 hover:underline font-bold uppercase tracking-wider text-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -53,8 +53,8 @@
                                 @click="selectedColor = choice.text" :class="[
                                     'px-4 py-2 text-sm font-bold uppercase border-2 transition-all',
                                     selectedColor === choice.text
-                                        ? 'bg-green-bright text-black border-green-bright'
-                                        : 'bg-transparent text-white border-white hover:border-green-bright'
+                                        ? 'bg-white text-black border-white'
+                                        : 'bg-transparent text-white border-white hover:border-gray-400'
                                 ]">
                                 {{ choice.text }}
                             </button>
@@ -71,8 +71,8 @@
                                 @click="selectedSize = choice.text" :class="[
                                     'px-4 py-2 text-sm font-bold uppercase border-2 transition-all',
                                     selectedSize === choice.text
-                                        ? 'bg-green-bright text-black border-green-bright'
-                                        : 'bg-transparent text-white border-white hover:border-green-bright'
+                                        ? 'bg-white text-black border-white'
+                                        : 'bg-transparent text-white border-white hover:border-gray-400'
                                 ]">
                                 {{ choice.text }}
                             </button>
@@ -84,7 +84,7 @@
                         class="w-full py-4 text-sm font-bold uppercase transition-all flex items-center justify-center gap-2"
                         :class="[
                             product.inStock && !isAddingToCart
-                                ? 'bg-green-bright text-black hover:opacity-90'
+                                ? 'bg-white text-black hover:opacity-90'
                                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                         ]">
                         <div v-if="isAddingToCart"
@@ -106,7 +106,7 @@
                             <button v-for="(image, index) in allImages" :key="index" @click="selectedImage = image.url"
                                 :class="[
                                     'w-full aspect-[4/5] bg-white overflow-hidden border-4 transition-all',
-                                    selectedImage === image.url ? 'border-green-bright' : 'border-transparent hover:border-gray-700'
+                                    selectedImage === image.url ? 'border-gray-500' : 'border-transparent hover:border-gray-700'
                                 ]">
                                 <img :src="image.url" :alt="`${product.name} - View ${index + 1}`"
                                     class="w-full h-full object-cover" loading="lazy" />
@@ -134,7 +134,7 @@
                 <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
                     <button v-for="(image, index) in allImages" :key="index" @click="selectedImage = image.url" :class="[
                         'flex-shrink-0 w-24 h-32 bg-white overflow-hidden border-4 transition-all',
-                        selectedImage === image.url ? 'border-green-bright' : 'border-transparent'
+                        selectedImage === image.url ? 'border-gray-500' : 'border-transparent'
                     ]">
                         <img :src="image.url" :alt="`View ${index + 1}`" class="w-full h-full object-cover"
                             loading="lazy" />
@@ -151,8 +151,8 @@
                             @click="selectedColor = choice.text" :class="[
                                 'px-4 py-2 text-sm font-bold uppercase border-2 transition-all',
                                 selectedColor === choice.text
-                                    ? 'bg-green-bright text-black border-green-bright'
-                                    : 'bg-transparent text-white border-white hover:border-green-bright'
+                                    ? 'bg-white text-black border-white'
+                                    : 'bg-transparent text-white border-white hover:border-gray-400'
                             ]">
                             {{ choice.text }}
                         </button>
@@ -169,8 +169,8 @@
                             @click="selectedSize = choice.text" :class="[
                                 'px-4 py-2 text-sm font-bold uppercase border-2 transition-all',
                                 selectedSize === choice.text
-                                    ? 'bg-green-bright text-black border-green-bright'
-                                    : 'bg-transparent text-white border-white hover:border-green-bright'
+                                    ? 'bg-white text-black border-white'
+                                    : 'bg-transparent text-white border-white hover:border-gray-400'
                             ]">
                             {{ choice.text }}
                         </button>
@@ -182,7 +182,7 @@
                     class="w-full py-4 text-sm font-bold uppercase transition-all flex items-center justify-center gap-2"
                     :class="[
                         product.inStock && !isAddingToCart
-                            ? 'bg-green-bright text-black hover:opacity-90'
+                            ? 'bg-white text-black hover:opacity-90'
                             : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     ]">
                     <div v-if="isAddingToCart"
