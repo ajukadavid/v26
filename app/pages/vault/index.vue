@@ -18,7 +18,7 @@
                 </div>
 
                 <!-- Product Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="grid grid-cols-2 gap-3 md:gap-8">
                     <div v-for="(product, index) in paginatedProducts" :key="index"
                         @click="navigateToProduct(product.id)" class="product-card group cursor-pointer relative block">
                         <!-- Out of Stock Badge -->
@@ -37,9 +37,9 @@
                         </div>
 
                         <!-- Info Bar (Matching Reference) -->
-                        <div class="bg-white p-3 flex justify-between items-center w-full">
-                            <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
-                            <span class="text-black text-sm font-bold">{{ product.price }}</span>
+                        <div class="bg-white p-2 md:p-3 flex flex-col md:flex-row gap-1 md:justify-between md:items-center w-full">
+                            <h3 class="text-black text-xs md:text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
+                            <span class="text-black text-xs md:text-sm font-bold">{{ product.price }}</span>
                         </div>
                     </div>
                 </div>

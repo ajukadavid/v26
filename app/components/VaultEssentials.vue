@@ -29,7 +29,7 @@
             </div>
 
             <!-- Product Grid -->
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+            <div v-else class="grid grid-cols-2 gap-3 md:gap-8 max-w-6xl mx-auto">
                 <div v-for="(product, index) in products" :key="index" :ref="(el) => { if (el) cardRefs[index] = el }"
                     class="scroll-wrapper" :class="index % 2 === 0 ? 'slide-left' : 'slide-right'">
                     <NuxtLink :to="`/vault/${product.id}`" class="product-card group cursor-pointer bg-zinc-950 block">
@@ -41,9 +41,9 @@
                             <img :src="product.hoverImage" :alt="product.name + ' Alternate'"
                                 class="w-full h-full object-cover zoom-image absolute inset-0 z-0 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100" />
                         </div>
-                        <div class="bg-white p-3 flex justify-between items-center w-full">
-                            <h3 class="text-black text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
-                            <span class="text-black text-sm font-bold">{{ product.price }}</span>
+                        <div class="bg-white p-2 md:p-3 flex flex-col md:flex-row gap-1 md:justify-between md:items-center w-full">
+                            <h3 class="text-black text-xs md:text-sm font-bold uppercase tracking-wider">{{ product.name }}</h3>
+                            <span class="text-black text-xs md:text-sm font-bold">{{ product.price }}</span>
                         </div>
                     </NuxtLink>
                 </div>
