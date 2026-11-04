@@ -10,7 +10,7 @@
       class="enter-link mt-6 md:mt-10 text-white font-bold text-base md:text-lg px-8 py-4 uppercase tracking-wider hover:opacity-70 transition-opacity">
       Enter the Vault
     </NuxtLink>
-    <p class="enter-link -mt-2 text-green-bright text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
+    <p class="enter-link -mt-2 text-green-bright text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em]">
       Possess the Culture
     </p>
   </div>

@@ -13,12 +13,9 @@
 
             <!-- Content -->
             <div class="absolute inset-0 z-10 flex flex-col items-center justify-center px-8 text-center">
-                <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-4 max-w-xl leading-tight">
-                    Modern streetwear for everyday movement.
-                </h3>
                 <NuxtLink to="/vault"
                     class="bg-white text-black font-bold text-sm md:text-base px-8 py-3 hover:opacity-90 transition-opacity uppercase inline-block">
-                    ENTER THE VAULT
+                    ACCESS THE DROP
                 </NuxtLink>
             </div>
         </div>
