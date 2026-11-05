@@ -1,287 +1,179 @@
 <template>
     <div class="bg-black min-h-screen text-white font-sans flex flex-col relative overflow-hidden">
-        <!-- Animated Background -->
         <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
             <div class="absolute inset-0 bg-dot-pattern animate-wave"></div>
         </div>
 
-        <!-- Main Content -->
-        <main
-            class="main-container flex-grow flex flex-col items-center justify-center px-6 md:px-12 py-20 w-full mx-auto text-center relative z-10">
-            <h1 class="page-title text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-16">
-                WELCOME TO THE VAULT
+        <main class="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-32 pb-20">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tighter text-center mb-4">
+                Welcome to the Vault
             </h1>
+            <p class="text-white/60 text-sm md:text-base text-center mb-12 md:mb-16 uppercase tracking-[0.2em]">
+                Inside the culture
+            </p>
 
-            <!-- Premium Video Player -->
-            <div class="video-container mx-auto desktop-video">
-                <video ref="videoPlayer" class="premium-video-player" preload="metadata" playsinline loop autoplay
-                    :poster="videoPoster" @loadedmetadata="onVideoLoaded" @error="onVideoError" @click="togglePlay">
-                    <source src="/v26video.webm" type="video/webm">
-                    <p class="text-gray-400">Your browser doesn't support HTML5 video.</p>
-                </video>
+            <div class="masonry mx-auto w-full max-w-5xl">
+                <article
+                    v-for="(item, index) in media"
+                    :key="item.src"
+                    class="masonry-item group"
+                    :class="{ 'masonry-item--wide': item.wide }"
+                    :style="{ animationDelay: `${index * 80}ms` }"
+                >
+                    <div class="relative overflow-hidden bg-zinc-900">
+                        <video
+                            v-if="item.type === 'video'"
+                            :ref="(el) => setVideoRef(el, index)"
+                            class="w-full h-auto block cursor-pointer"
+                            :poster="item.poster"
+                            playsinline
+                            loop
+                            muted
+                            preload="metadata"
+                            @click="toggleVideo(index)"
+                        >
+                            <source :src="item.src" :type="item.mime" />
+                        </video>
 
-                <!-- Custom Mute/Unmute Button -->
-                <button @click="toggleMute" class="mute-button" :class="{ 'muted': isMuted }" aria-label="Toggle mute">
-                    <svg v-if="!isMuted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-                    </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-                    </svg>
-                </button>
+                        <img
+                            v-else
+                            :src="item.src"
+                            :alt="item.alt"
+                            class="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                        />
 
-                <!-- Loading Indicator -->
-                <!-- <div v-if="isLoading" class="loading-overlay">
-                    <div class="loading-spinner"></div>
-                </div> -->
+                        <button
+                            v-if="item.type === 'video'"
+                            type="button"
+                            class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+                            :aria-label="playing[index] ? 'Pause' : 'Play'"
+                            @click.stop="toggleVideo(index)"
+                        >
+                            <svg v-if="!playing[index]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-0.5">
+                                <path d="M8 5.14v14l11-7-11-7z" />
+                            </svg>
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                                <path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z" />
+                            </svg>
+                        </button>
+                    </div>
+                </article>
             </div>
-
-
         </main>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 
-// Video player state
-const videoPlayer = ref(null)
-const isLoading = ref(true)
-const videoPoster = ref('')
-const isMuted = ref(false)
-
-// Set page meta
 useHead({
     title: 'Community - Welcome to The Vault',
     meta: [
-        { name: 'description', content: 'Our commitment to sustainability and ethical fashion.' }
+        { name: 'description', content: 'Inside the V26 culture — community, drops, and life in the Vault.' }
     ]
 })
 
-// Video event handlers
-const onVideoLoaded = () => {
-    isLoading.value = false
-}
-
-const onVideoError = (error) => {
-    console.error('Video loading error:', error)
-    isLoading.value = false
-}
-
-// Toggle mute/unmute
-const toggleMute = () => {
-    if (videoPlayer.value) {
-        videoPlayer.value.muted = !videoPlayer.value.muted
-        isMuted.value = videoPlayer.value.muted
+const media = [
+    {
+        type: 'image',
+        src: '/community/community-1.jpg',
+        alt: 'V26 community — staircase editorial'
+    },
+    {
+        type: 'image',
+        src: '/community/community-2.jpg',
+        alt: 'V26 community — AV26 drop editorial'
+    },
+    {
+        type: 'video',
+        src: '/community/community-clip.mp4',
+        mime: 'video/mp4',
+        poster: '/community/community-clip-poster.jpg',
+        alt: 'V26 community clip',
+        wide: true
+    },
+    {
+        type: 'video',
+        src: '/v26video.webm',
+        mime: 'video/webm',
+        poster: '',
+        alt: 'Welcome to the Vault'
     }
+]
+
+const videoRefs = ref([])
+const playing = reactive({})
+
+const setVideoRef = (el, index) => {
+    if (el) videoRefs.value[index] = el
 }
 
-// Toggle play/pause
-const togglePlay = () => {
-    if (videoPlayer.value) {
-        if (videoPlayer.value.paused) {
-            videoPlayer.value.play()
-        } else {
-            videoPlayer.value.pause()
+const toggleVideo = async (index) => {
+    const video = videoRefs.value[index]
+    if (!video) return
+
+    if (video.paused) {
+        try {
+            await video.play()
+            playing[index] = true
+        } catch {
+            playing[index] = false
         }
+    } else {
+        video.pause()
+        playing[index] = false
     }
 }
 
-// Optional: Auto-play on mount (with user interaction)
 onMounted(() => {
-    // Ensure video plays automatically
-    if (videoPlayer.value) {
-        // Try to play unmuted first
-        const playPromise = videoPlayer.value.play()
-
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    // Video is playing unmuted successfully
-                    console.log('Video autoplay started with sound')
-                })
-                .catch((error) => {
-                    // Autoplay with sound was prevented, try muted
-                    console.log('Autoplay with sound blocked, trying muted:', error)
-                    videoPlayer.value.muted = true
-                    isMuted.value = true
-                    videoPlayer.value.play()
-                        .then(() => {
-                            console.log('Video autoplay started muted')
-                        })
-                        .catch((err) => {
-                            console.error('Autoplay failed completely:', err)
-                        })
-                })
-        }
+    // Autoplay muted landscape clip for atmosphere
+    const clipIndex = media.findIndex(item => item.src.includes('community-clip'))
+    const clip = videoRefs.value[clipIndex]
+    if (clip) {
+        clip.muted = true
+        clip.play().then(() => {
+            playing[clipIndex] = true
+        }).catch(() => {})
     }
 })
 </script>
 
 <style scoped>
-/* Ensure legible text on small screens */
-p {
-    font-weight: 300;
-}
-
-/* Video Container */
-.video-container {
-    position: relative;
-    width: 100%;
-    margin: 2rem auto;
-}
-
-/* Desktop: Wide layout (50% width) */
-.desktop-video {
-    width: 50%;
-    max-width: 50vw;
-}
-
-/* Premium Video Player Styling */
-.premium-video-player {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 24px;
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(34, 197, 94, 0.2),
-        0 0 80px rgba(34, 197, 94, 0.15);
-    backdrop-filter: blur(10px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    object-fit: cover;
-    background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 30, 30, 0.95) 100%);
-    cursor: pointer;
-}
-
-.premium-video-player:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.6),
-        0 0 60px rgba(34, 197, 94, 0.3),
-        0 0 120px rgba(34, 197, 94, 0.2);
-}
-
-/* Custom Mute Button */
-.mute-button {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    display: flex;
-    align-items: center;
+.masonry {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 20;
 }
 
-.mute-button:hover {
-    background: rgba(16, 185, 129, 0.8);
-    border-color: rgba(16, 185, 129, 1);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-}
-
-.mute-button:active {
-    transform: scale(0.95);
-}
-
-.mute-button.muted {
-    background: rgba(34, 197, 94, 0.6);
-    border-color: rgba(34, 197, 94, 0.4);
-}
-
-.mute-button.muted:hover {
-    background: rgba(34, 197, 94, 0.8);
-    border-color: rgba(34, 197, 94, 1);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-}
-
-/* Loading Overlay */
-.loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 24px;
-    backdrop-filter: blur(10px);
-    z-index: 10;
-}
-
-/* Loading Spinner */
-.loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(255, 255, 255, 0.1);
-    border-top: 4px solid #9333ea;
-    border-right: 4px solid #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
+@media (min-width: 640px) {
+    .masonry {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
     }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+.masonry-item {
+    opacity: 0;
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-    /* Mobile: Portrait layout (narrower, taller) */
-    .main-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+@media (min-width: 640px) {
+    .masonry-item--wide {
+        grid-column: 1 / -1;
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
     }
 
-    .page-title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .desktop-video {
-        width: 95%;
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    .premium-video-player {
-        border-radius: 16px;
-        height: 65vh;
-        min-height: 50vh;
-        max-height: 65vh;
-        object-fit: cover;
-    }
-
-    .premium-video-player:hover {
-        transform: translateY(-2px) scale(1.005);
-    }
-
-    .mute-button {
-        width: 48px;
-        height: 48px;
-        bottom: 16px;
-        right: 16px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -291,25 +183,11 @@ p {
 }
 
 @keyframes wave {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    25% {
-        background-position: 25% 45%;
-    }
-
-    50% {
-        background-position: 50% 55%;
-    }
-
-    75% {
-        background-position: 75% 45%;
-    }
-
-    100% {
-        background-position: 100% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    25% { background-position: 25% 45%; }
+    50% { background-position: 50% 55%; }
+    75% { background-position: 75% 45%; }
+    100% { background-position: 100% 50%; }
 }
 
 .animate-wave {

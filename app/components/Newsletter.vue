@@ -8,13 +8,12 @@
 
         <!-- Text Content -->
         <div ref="textRef" class="max-w-3xl relative z-10 scroll-animate">
-            <h2 class="text-white text-4xl md:text-6xl font-black leading-none uppercase tracking-tight">
-                "STAY CLOSE" BE THE<br />
-                FIRST TO KNOW<br />
-                ABOUT DROPS,<br />
-                COMMUNITY EVENTS,<br />
-                AND UPDATES.
+            <h2 class="text-white text-4xl md:text-6xl font-black leading-none uppercase tracking-tight mb-4">
+                Stay Close
             </h2>
+            <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-md">
+                Get first access to exclusive drops, community events and everything happening inside the Vault.
+            </p>
         </div>
 
         <!-- Email Input -->
